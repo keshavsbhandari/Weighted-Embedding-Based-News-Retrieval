@@ -1,0 +1,330 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+      <link rel="stylesheet" type="text/css" href="{% static 'recommender/css/style.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Retrieval101</title>
+  </head>
+  <body>
+  <div class="container">
+      <br>
+      <h1 class="text-center"> WEIGHTED EMBEDDING BASED NEWS RETRIEVAL</h1>
+      <h6 class="text-center"> By<br>Keshav Bhandari</h6>
+      <br>
+  </div>
+    <div class="container-fluid center">
+        <div class="row">
+            <div class="col col-lg-3" style="background: #000000;border-radius: 5px;">
+                <br>
+                <li class="list-group-item active" style="font-weight: bold;border-radius:5px;">ALL NEWS TITLE
+                </li>
+
+                <br>
+                <form id="allnews" action="/u/" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input id="n_news" name="n" type="number" class="form-control" value= "-1" required>
+                      <div class="input-group-append">
+                        <button id="get_n_news" class="btn btn-outline-primary">Filter</button>
+                      </div>
+                    </div>
+                </form>
+
+              <ul id="allnewslist" class="list-group" style="height: 595px;overflow-y: scroll">
+
+
+                  {% block allnews %}
+                      {% for l in allnews %}
+                        <li class='list-group-item newsreadlist' style='background: {{l.background}}' id='{{l.id}}news'>{{l.news}}
+                            <br><span class="badge badge-warning badge-pill">CAGEGORY</span>
+                            <button id='{{l.id}}' class='btn btn-sm btn-outline-primary float-right addnews'>+</button>
+                        </li>
+                      {% endfor %}
+                  {% endblock %}
+
+              </ul>
+            </div>
+            <div class="col col-lg-3">
+              <div class="col-lg-12" style="background: #99d6cf94;border-radius: 5px;padding-bottom: 10px;margin-bottom: 5px;">
+                  <br>
+                  <li class="list-group-item active" style="font-weight: bold;border-radius:5px;">CANDIDATES</li>
+                  <br>
+                  <form id="getcandidate" enctype="multipart/form-data">
+                      {% csrf_token %}
+                    <div class="input-group mb-3">
+                      <input id="n_candidate" type="number" name="n" class="form-control" value="10" placeholder="Select N" required>
+                      <div class="input-group-append">
+                        <button id="get_n_candidate" class="btn btn-outline-primary" type="button">Get Random Candidate</button>
+                      </div>
+                    </div>
+                  </form>
+                  <ul id="recomnewslist" class="list-group" style="height: 250px;overflow-y: scroll">
+
+                      {% block content %}
+                            {% for item in recomnews %}
+                                <li class='list-group-item newsrecomlist' style='background: {{item.background}}'>{{item.news}}
+                                <br><span class="badge badge-warning badge-pill">CATEGORY</span>
+                                </li>
+                            {% endfor %}
+                        {% endblock %}
+
+                  </ul>
+              </div>
+                <div class="col-lg-12" style="background: #64818e78;border-radius: 5px;padding-bottom: 10px;margin-bottom: 5px;">
+                    <br>
+                    <li class="list-group-item active" style="font-weight: bold;border-radius:5px;">USER READ NEWS</li>
+                    <br>
+                    <ul id="usereradnews" class="list-group" style="height: 250px;overflow-y: scroll">
+
+                        {% block newcontent %}
+                            {% for item in usernews %}
+                                <li class='list-group-item userreadlist' style='background: {{item.background}}' id='{{item.id}}user'>{{item.news}}
+                                    <br><span class="badge badge-warning badge-pill">CATEGORY</span>
+
+                                <button id='{{ item.id }}' class="btn btn-sm btn-outline-danger float-right remove">X</button>
+                                </li>
+                            {% endfor %}
+                        {% endblock %}
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="col col-lg-6" style="background: rgba(129,149,218,0.28);border-radius: 5px;">
+                <br>
+                <li class="list-group-item active" style="font-weight: bold;border-radius:5px;">RECOMMENDED NEWS USING CUSTOM EMBEDDING</li>
+                <br>
+                <form id="recom-form">
+                    <div class="input-group mb-3">
+                      <input type="number" class="form-control" name="n" value="5" placeholder="Select N" required>
+                      <div class="input-group-append">
+                        <button id="getrecom" class="btn btn-outline-primary" type="button" >Get Recommendation</button>
+                      </div>
+                    </div>
+                </form>
+
+                <ol id="recommendationslist" class="list-group" style="height: 250px;overflow-y: scroll">
+                </ol>
+                <br>
+                <li class="list-group-item active" style="font-weight: bold;border-radius:5px;">RECOMMENDED NEWS USING GOOGLE EMBEDDING</li>
+                <br>
+                <ol id="recommendationslist_" class="list-group" style="height: 250px;overflow-y: scroll">
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+
+    <script type="text/javascript">
+
+        var csrftoken = Cookies.get('csrftoken');
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        $("#get_n_news").on('click',function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $("#allnewslist").empty();
+            var myData = new FormData($("#allnews")[0]);
+            $.ajax({
+                type:"POST",
+                url:'/u/',
+                data:myData,
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    $.each(result,function (i,l) {
+                        {#var items = "<li class='list-group-item "+{0}+"' style='background: "+{1}+"' newsid='"+{2}+"'>"+{3}+"</li>";#}
+                        var items = "<li class='list-group-item newsreadlist' style='background: "+l.background+"' id='"+l.id+"news'>"+l.news;
+                        items = items + "<br><span class='badge badge-warning badge-pill'>CATEGORY</span>"
+                        items = items + "<button id="+l.id+" class='btn btn-sm btn-outline-primary float-right addnews'>"+"+"+"</button></li>"
+                        $("#allnewslist").prepend(items);
+                    })
+                },
+                error:function (result) {
+                    alert("ERRROR");
+                }
+            });
+            return false;
+        });
+
+
+
+        $("#getrecom").on('click',function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $("#recommendationslist").empty();
+            $("#recommendationslist_").empty();
+            var myData = new FormData($("#recom-form")[0]);
+            $.ajax({
+                type:"POST",
+                url:'/r/',
+                data:myData,
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    $.each(result['custom'],function (i,l) {
+                        var items = "<li class='list-group-item' style='background: "+l.background+"' id='"+l.id+"news'>"+l.news;
+                        items = items + "<br><span class='badge badge-warning badge-pill'>CATEGORY</span>";
+                        items = items + "<span class='badge badge-danger badge-pill float-right'>"+l.serial+"</span></li>";
+                        $("#recommendationslist").append(items);
+                    });
+
+                    $.each(result['google'],function (i,l) {
+                        var items = "<li class='list-group-item' style='background: "+l.background+"' id='"+l.id+"news'>"+l.news;
+                        items = items + "<br><span class='badge badge-warning badge-pill'>CATEGORY</span>";
+                        items = items + "<span class='badge badge-danger badge-pill float-right'>"+l.serial+"</span></li>";
+                        $("#recommendationslist_").append(items);
+                    });
+                },
+                error:function (result) {
+                    alert("ERRROR");
+                }
+            });
+            return false;
+        });
+        $("#get_n_candidate").on('click',function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $("#recomnewslist").empty();
+            var myData = new FormData($("#getcandidate")[0]);
+            background = ["white","lightgray"];
+            $.ajax({
+                type:"POST",
+                url:'/v/',
+                data:myData,
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    $.each(result,function (i,l) {
+                        var items = "<li class='list-group-item newsrecomlist' style='background: "+l.background+"'>"+l.news;
+                        items = items + "<br><span class='badge badge-warning badge-pill'>CATEGORY</span></li>";
+                        $("#recomnewslist").prepend(items);
+                        if($("#allnewslist").find(l.id+"news")){
+                            $("#"+l.id+"news").remove();
+                        }
+                    });
+                    $.each($(".newsreadlist").toArray(),function (i,l) {
+                        $(l).css('background',background[i%2])
+                    });
+                },
+                error:function (result) {
+                    alert("ERRROR");
+                }
+            });
+            return false;
+        });
+
+        $(document).on('click',"button.remove",function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var newsid = $(this).attr('id');
+            var listid = "#"+newsid+"user";
+            var background = ['white','lightgray'];
+            var formdata = new FormData()
+            formdata.append('newsid',newsid)
+            $.ajax({
+                type:"POST",
+                url:"/d/",
+                data:formdata,
+                processData: false,
+                contentType: false,
+                success:function (result) {
+                    $(listid).find("#"+newsid).text("+");
+                    $(listid).find("#"+newsid).removeClass("remove");
+                    $(listid).find("#"+newsid).removeClass("btn-outline-danger");
+                    $(listid).find("#"+newsid).addClass("btn-outline-primary");
+                    $(listid).find("#"+newsid).addClass("addnews");
+                    $(listid).removeClass("userreadlist");
+                    $(listid).addClass("newsreadlist");
+                    $(listid).appendTo("#allnewslist");
+                    $(listid).attr('id',newsid+"news");
+
+
+
+                    $.each($(".userreadlist").toArray(),function (i,l) {
+                        $(l).css('background',background[i%2])
+                    });
+
+                    $.each($(".newsreadlist").toArray(),function (i,l) {
+                        $(l).css('background',background[i%2])
+                    });
+                },
+                error:function (result) {
+                    alert("ERROR");
+                }
+            });
+            return false;
+        });
+
+
+        $(document).on('click',"button.addnews", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var newsid = $(this).attr('id');
+            var listid = "#"+newsid+"news";
+            var background = ['white','lightgray'];
+            var formdata = new FormData()
+            formdata.append('newsid',newsid)
+            $.ajax({
+                type:"POST",
+                url:"/n/",
+                data:formdata,
+                processData: false,
+                contentType: false,
+                success:function (result) {
+                    $(listid).find("#"+newsid).text("X");
+                    $(listid).find("#"+newsid).removeClass("btn-outline-primary");
+                    $(listid).find("#"+newsid).removeClass("addnews");
+                    $(listid).find("#"+newsid).addClass("remove");
+                    $(listid).find("#"+newsid).addClass("btn-outline-danger");
+                    $(listid).removeClass("newsreadlist")
+                    $(listid).addClass("userreadlist")
+                    $(listid).prependTo("#usereradnews");
+                    $(listid).attr('id',newsid+"user");
+
+                    $.each($(".userreadlist").toArray(),function (i,l) {
+                        $(l).css('background',background[i%2])
+                    });
+
+                    $.each($(".newsreadlist").toArray(),function (i,l) {
+                        $(l).css('background',background[i%2])
+                    });
+                },
+                error:function (result) {
+                    alert("ERROR");
+                }
+            });
+            return false;
+        });
+
+
+    </script>
+  </body>
+</html>
+
+
+
+{#http://0.0.0.0:5002/recommendations?n=20#}
+{#model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin',binary=True)  #}

@@ -1,0 +1,6 @@
+*.yml
+*.bin
+*.npy
+.DS_Store
+.idea/
+data/embeddings/mdl

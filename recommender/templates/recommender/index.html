@@ -9,22 +9,121 @@
       <link rel="stylesheet" type="text/css" href="{% static 'recommender/css/style.css' %}">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">#}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Retrieval101</title>
+
+{#      <style>#}
+{#          @media screen and (max-width: 600px) {#}
+{#  .hideonphone {#}
+{#    visibility: hidden;#}
+{#    clear: both;#}
+{#    float: left;#}
+{#    margin: 10px auto 5px 20px;#}
+{#    width: 28%;#}
+{#    display: none;#}
+{#  }#}
+{##}
+{##}
+{#              #title_laptop{#}
+{#                  visibility: hidden;#}
+{#              }#}
+{##}
+{#              #by_laptop{#}
+{#                  visibility: hidden;#}
+{#              }#}
+{#}#}
+{##}
+{#          @media screen and (min-width: 768px) {#}
+{#  .hideonlaptop {#}
+{#    visibility: hidden;#}
+{#    clear: both;#}
+{#    float: left;#}
+{#    margin: 10px auto 5px 20px;#}
+{#    width: 28%;#}
+{#    display: none;#}
+{#  }#}
+{#              #title_mobile{#}
+{#                  visibility: hidden;#}
+{#              }#}
+{##}
+{#              #story_mobile{#}
+{#                  visibility: hidden;#}
+{#              }#}
+{#              #btn_mobile_like{#}
+{#                  visibility: hidden;#}
+{#              }#}
+{#              #btn_mobile_dislike{#}
+{#                  visibility: hidden;#}
+{#              }#}
+{#              .mobilebadge{#}
+{#                  visibility: hidden;#}
+{#                  display: flex;#}
+{#                  align-items: center;#}
+{#              }#}
+{##}
+{#              .containermobile{#}
+{#                  visibility: hidden;#}
+{#              }#}
+{##}
+{#}#}
+{#      </style>#}
   </head>
-  <body>
-  <div class="container">
+  <body style="background: #000000ad;color: white;">
+
+  {% block recomcontent %}
+
+  <div class="container containermobile">
       <br>
-      <h1 class="text-center"> WEIGHTED EMBEDDING BASED NEWS RETRIEVAL</h1>
-      <h6 class="text-center"> By<br>Keshav Bhandari</h6>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+  <div class="row">
+  <div class="align-self-start col-lg-4" style="background: black;border-radius: 10px;text-align: center;margin: auto;
+  width: 50%;
+  padding: 10px;">
+      <br>
+      <img id="imgdynamic" src="http://placekitten.com/g/250/250" alt="" style="display: block;margin-left: auto;margin-right: auto;width: 100%; border-radius: 10px" />
+      <h3 id="title_mobile" class="text-center" style="font-family: serif;">{{ recom.news }}</h3>
+      <h6 id="story_mobile" class="text-center">{{ recom.summary }}</h6>
+      <br><span class="align-middle mobilebadge badge-warning badge-pill" id="spancatmobile">{{recom.cat}}</span>
+      <span class='align-middle mobilebadge badge-info badge-pill' id="spansitecatmobile">{{recom.sitecat}}</span>
+      <div class="row" style="width:60%;
+  display:inline;
+  overflow: auto;
+  white-space: nowrap;
+  margin:0px auto;">
+          <br>
+          <br>
+          <button id='btn_mobile_dislike' newsid="{{ recom.idxs }}" class='btn btn-sm btn-outline-primary float-left' style="background-color: #6c757d;border-color: #212529;color:white;">DISLIKE</button>
+          <button id='btn_mobile_like' newsid="{{ recom.idxs }}" class='btn btn-sm btn-outline-primary float-right' style="background-color: #6c757d;border-color: #212529;color:white;">LIKE</button>
+          <br>
+      </div>
       <br>
   </div>
-    <div class="container-fluid center">
+  </div>
+  </div>
+  {% endblock %}
+
+  <div class="container" >
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <h1 id="title_laptop" class="text-center" style="font-family: serif;"> WEIGHTED EMBEDDING BASED NEWS RETRIEVAL</h1>
+      <h6 id="by_laptop" class="text-center" style="font-family: serif;"> By<br>Keshav Bhandari</h6>
+  </div>
+
+
+    <div class="hideonphone container-fluid center" style="border-color: white;background: black">
         <div class="row">
-            <div class="col col-lg-3" style="background: #000000;border-radius: 5px;">
+            <div class="col col-lg-3" style="background: black;color:white;border-radius: 5px;">
                 <br>
-                <li class="list-group-item active" style="font-weight: bold;border-radius:5px;">ALL NEWS TITLE
+                <li class="list-group-item active" style="font-weight: bold;border-radius:5px;background-color: #6c757d;border-color: #212529;">ALL NEWS TITLE
                 </li>
 
                 <br>
@@ -33,7 +132,7 @@
                     <div class="input-group mb-3">
                         <input id="n_news" name="n" type="number" class="form-control" value= "-1" required>
                       <div class="input-group-append">
-                        <button id="get_n_news" class="btn btn-outline-primary">Filter</button>
+                        <button id="get_n_news" class="btn btn-outline-primary" style="background-color: #6c757d;border-color: #212529;color:white;">Filter</button>
                       </div>
                     </div>
                 </form>
@@ -43,26 +142,27 @@
 
                   {% block allnews %}
                       {% for l in allnews %}
-                        <li class='list-group-item newsreadlist' style='background: {{l.background}}' id='{{l.id}}news'>{{l.news}}
-                            <br><span class="badge badge-warning badge-pill">CAGEGORY</span>
-                            <button id='{{l.id}}' class='btn btn-sm btn-outline-primary float-right addnews'>+</button>
+                        <li news="{{ l.news }}" cat = '{{ l.cat }}' sitecat = '{{ l.sitecat }}' class='grabtomodal list-group-item newsreadlist' style='background:black;color:white;' id='{{l.idxs}}news' summary='{{ l.summ }}'>{{l.news}}
+                            <br><span class="badge badge-warning badge-pill">{{l.cat}}</span>
+                            <span class='badge badge-info badge-pill'>{{l.sitecat}}</span>
+                            <button id='{{l.idxs}}' class='btn btn-sm btn-outline-primary float-right addnews' style="background-color: #6c757d;border-color: #212529;color:white;">+</button>
                         </li>
                       {% endfor %}
                   {% endblock %}
 
               </ul>
             </div>
-            <div class="col col-lg-3">
-              <div class="col-lg-12" style="background: #99d6cf94;border-radius: 5px;padding-bottom: 10px;margin-bottom: 5px;">
+            <div class="col col-lg-3" style="background: black;color:white;border-radius:10px;">
+{#              <div class="col-lg-12" style="background: black;color:white;border-radius: 5px;padding-bottom: 10px;margin-bottom: 5px;">#}
                   <br>
-                  <li class="list-group-item active" style="font-weight: bold;border-radius:5px;">CANDIDATES</li>
+                  <li class="list-group-item active" style="font-weight: bold;border-radius:5px;background-color: #6c757d;border-color: #212529;">CANDIDATES</li>
                   <br>
                   <form id="getcandidate" enctype="multipart/form-data">
                       {% csrf_token %}
                     <div class="input-group mb-3">
                       <input id="n_candidate" type="number" name="n" class="form-control" value="10" placeholder="Select N" required>
                       <div class="input-group-append">
-                        <button id="get_n_candidate" class="btn btn-outline-primary" type="button">Get Random Candidate</button>
+                        <button id="get_n_candidate" class="btn btn-outline-primary" type="button" style="background-color: #6c757d;border-color: #212529;color:white;">Get Random Candidate</button>
                       </div>
                     </div>
                   </form>
@@ -70,43 +170,44 @@
 
                       {% block content %}
                             {% for item in recomnews %}
-                                <li class='list-group-item newsrecomlist' style='background: {{item.background}}'>{{item.news}}
-                                <br><span class="badge badge-warning badge-pill">CATEGORY</span>
+                                <li news="{{ item.news }}"  cat = '{{ item.cat }}' sitecat = '{{ item.sitecat }}' class='colorit grabtomodal list-group-item newsrecomlist' style='background:black;color:white;'  summary='{{ item.summ }}'>{{item.news}}
+                                <br><span class="badge badge-warning badge-pill">{{item.cat}}</span>
+                                <span class='badge badge-info badge-pill'>{{item.sitecat}}</span>
                                 </li>
                             {% endfor %}
                         {% endblock %}
 
                   </ul>
-              </div>
-                <div class="col-lg-12" style="background: #64818e78;border-radius: 5px;padding-bottom: 10px;margin-bottom: 5px;">
+{#              </div>#}
+{#                <div class="col-lg-12" style="background: black;color:white;border-radius: 5px;padding-bottom: 10px;margin-bottom: 5px;">#}
                     <br>
-                    <li class="list-group-item active" style="font-weight: bold;border-radius:5px;">USER READ NEWS</li>
+                    <li class="list-group-item active" style="font-weight: bold;border-radius:5px;background-color: #6c757d;border-color: #212529;">USER READ NEWS</li>
                     <br>
                     <ul id="usereradnews" class="list-group" style="height: 250px;overflow-y: scroll">
 
                         {% block newcontent %}
                             {% for item in usernews %}
-                                <li class='list-group-item userreadlist' style='background: {{item.background}}' id='{{item.id}}user'>{{item.news}}
-                                    <br><span class="badge badge-warning badge-pill">CATEGORY</span>
-
-                                <button id='{{ item.id }}' class="btn btn-sm btn-outline-danger float-right remove">X</button>
+                                <li news="{{ item.news }}"  cat = '{{ item.cat }}' sitecat = '{{ item.sitecat }}' class='colorit grabtomodal list-group-item userreadlist' style='background:black;color:white;' id='{{item.idxs}}user' summary='{{ item.summ }}'>{{item.news}}
+                                    <br><span class="badge badge-warning badge-pill">{{item.cat}}</span>
+                                    <span class='badge badge-info badge-pill'>{{item.sitecat}}</span>
+                                <button id='{{ item.idxs }}' class="btn btn-sm btn-outline-danger float-right remove" style="background-color: #6c757d;border-color: #212529;color:white;">X</button>
                                 </li>
                             {% endfor %}
                         {% endblock %}
                     </ul>
 
-                </div>
+{#                </div>#}
             </div>
 
-            <div class="col col-lg-6" style="background: rgba(129,149,218,0.28);border-radius: 5px;">
+            <div class="col col-lg-3" style="background: black;color:white;border-radius: 5px;">
                 <br>
-                <li class="list-group-item active" style="font-weight: bold;border-radius:5px;">RECOMMENDED NEWS USING CUSTOM EMBEDDING</li>
+                <li class="list-group-item active" style="font-weight: bold;border-radius:5px;background-color: #6c757d;border-color: #212529;">RECOMS(Title) CUSTOM</li>
                 <br>
                 <form id="recom-form">
                     <div class="input-group mb-3">
                       <input type="number" class="form-control" name="n" value="5" placeholder="Select N" required>
                       <div class="input-group-append">
-                        <button id="getrecom" class="btn btn-outline-primary" type="button" >Get Recommendation</button>
+                        <button id="getrecom" class="btn btn-outline-primary" type="button" style="background-color: #6c757d;border-color: #212529;color:white;">Get Recommendation</button>
                       </div>
                     </div>
                 </form>
@@ -114,19 +215,188 @@
                 <ol id="recommendationslist" class="list-group" style="height: 250px;overflow-y: scroll">
                 </ol>
                 <br>
-                <li class="list-group-item active" style="font-weight: bold;border-radius:5px;">RECOMMENDED NEWS USING GOOGLE EMBEDDING</li>
+                <li class="list-group-item active" style="font-weight: bold;border-radius:5px;background-color: #6c757d;border-color: #212529;">RECOMS(Title) GOOGLE</li>
                 <br>
                 <ol id="recommendationslist_" class="list-group" style="height: 250px;overflow-y: scroll">
                 </ol>
             </div>
+
+        <div class="col col-lg-3" style="background: black;color:white;border-radius: 5px;">
+                <br>
+                <li class="list-group-item active" style="font-weight: bold;border-radius:5px;background-color: #6c757d;border-color: #212529;">RECOMS(Summary) CUSTOM</li>
+                <br>
+                <form id="recom-form_summ">
+                    <div class="input-group mb-3">
+                      <input type="number" class="form-control" name="n" value="5" placeholder="Select N" required>
+                      <div class="input-group-append">
+                        <button id="getrecom_summ" class="btn btn-outline-primary" type="button" style="background-color: #6c757d;border-color: #212529;color:white;">Get Recommendation</button>
+                      </div>
+                    </div>
+                </form>
+
+                <ol id="recommendationslist_summ" class="list-group" style="height: 250px;overflow-y: scroll">
+                </ol>
+                <br>
+                <li class="list-group-item active" style="font-weight: bold;border-radius:5px;background-color: #6c757d;color:white;border-color: #212529;">RECOMS(Summary) GOOGLE</li>
+                <br>
+                <ol id="recommendationslist__summ" class="list-group" style="height: 250px;overflow-y: scroll">
+                </ol>
+            </div>
+
+
+
+
+
         </div>
     </div>
 
+    <!-- Button trigger modal -->
+<button id="colorbycat" type="button" class="hideonphone btn btn-primary float-right" style="margin:10px;background-color: #6c757d;color:white;border-color: #212529;">
+  Visualize by category
+</button>
+
+<button id="colorbysitecat" type="button" class="hideonphone btn btn-primary float-right" style="margin:10px;background-color: #6c757d;color:white;border-color: #212529;">
+Visualize by site-category
+</button>
+
+
+<button id="resetcolor" type="button" class="hideonphone btn btn-primary float-right" style="margin:10px;background-color: #6c757d;color:white;border-color: #212529;">
+Reset Visualization
+</button>
+
+<!-- Modal -->
+<div class="hideonphone modal fade" id="modalsummary" tabindex="-1" role="dialog" aria-labelledby="NewsSummary" aria-hidden="true" style="background: black;color:white;border-color: #212529;">
+  <div class="modal-dialog" role="document" style="background: black;color:white;border-color: #212529;">
+    <div class="modal-content" style="background: black;color:white;border-color: #212529;">
+      <div class="modal-header" style="background: black;color:white;border-color: #212529;">
+        <h5 class="modal-title" id="title" style="background: black;color:white;border-color: #212529;">Modal title</h5>
+      </div>
+      <div class="modal-body" id="summary" style="background: black;color:white;border-color: #212529;">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" style='margin:10px;background-color: #6c757d;color:white;border-color: #212529;'>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+{#    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>#}
+{#    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>#}
 
 
     <script type="text/javascript">
+
+        $("#btn_mobile_like").click(function () {
+            var formdata = new FormData()
+            formdata.append('newsid',$(this).attr('newsid'));
+            $.ajax({
+                type:"POST",
+                url:"/like/",
+                data:formdata,
+                processData: false,
+                contentType: false,
+                success:function (result) {
+                    $("#title_mobile").text(result['news']);
+                    $("#story_mobile").text(result['summary']);
+                    $("#spancatmobile").text(result['cat']);
+                    $("#spansitecatmobile").text(result['sitecat']);
+                    randwidth = Math.floor(Math.random() * 1000) + 250;
+                    randwidth = randwidth.toString();
+                    imgurl ="http://placekitten.com/g/"+randwidth+"/"+randwidth;
+                    $("#imgdynamic").attr('src',imgurl);
+                    $(this).attr('newsid',result['idxs']);
+                },
+                error:function (result) {
+                    alert("ERROR");
+                }
+            });
+            return false;
+
+        });
+
+        $("#btn_mobile_dislike").click(function () {
+
+            var formdata = new FormData()
+            formdata.append('newsid',$(this).attr('newsid'));
+            $.ajax({
+                type:"POST",
+                url:"/dislike/",
+                data:formdata,
+                processData: false,
+                contentType: false,
+                success:function (result) {
+                    $("#title_mobile").text(result['news']);
+                    $("#story_mobile").text(result['summary']);
+                    $("#spancatmobile").text(result['cat']);
+                    $("#spansitecatmobile").text(result['sitecat']);
+                    randwidth = Math.floor(Math.random() * 1000) + 250;
+                    randwidth = randwidth.toString();
+                    imgurl ="http://placekitten.com/g/"+randwidth+"/"+randwidth;
+                    $("#imgdynamic").attr('src',imgurl);
+                    $(this).attr('newsid',result['idxs'])
+                },
+                error:function (result) {
+                    alert("ERROR");
+                }
+            });
+            return false;
+        });
+
+        $("#resetcolor").click(function () {
+
+            $(".newsreadlist").css('background',"black");
+            $(".newsreadlist").css('color',"white");
+
+            $(".newsrecomlist").css('background',"black");
+            $(".newsrecomlist").css('color',"white");
+
+            $(".userreadlist").css('background',"black");
+            $(".userreadlist").css('color',"white");
+
+            $(".recomcustomtitle").css('background',"black");
+            $(".recomcustomtitle").css('color',"white");
+
+            $(".recomgoogletitle").css('background',"black");
+            $(".recomgoogletitle").css('color',"white");
+
+            $(".recomcustomtitle_summ").css('background',"black");
+            $(".recomcustomtitle_summ").css('color',"white");
+
+            $(".recomgoogletitle_summ").css('background',"black");
+            $(".recomgoogletitle_summ").css('color',"white");
+
+        });
+
+        $("#colorbycat").click(function () {
+          var catmap = {"others": "#20ad4299", "entertainment": "#efc3c3", "economy": "#9ac7ff", "nepal": "#000000", "world": "#d3d3d3", "sports": "#ffc107"};
+          $.each($(".grabtomodal").toArray(),function (i,l) {
+                        $(l).css('background',catmap[$(l).attr("cat")]);
+                    });
+        });
+
+
+        $("#colorbysitecat").click(function () {
+          var catmap = {"Sports": "#cab6b8", "Fiction Park": "#45283c", "Money": "#663931", "Video": "#8f563b", "Blog": "#df7126", "Int'l Coverage": "#d9a066", "Photo-feature": "#eec39a", "Escalate": "#000000", "Health & Style": "#99e550", "Saturday Features": "#6abe30", "Oped": "#37946e", "INTERVIEW": "#4b692f", "Entertainment": "#524b24", "News Makers 2017": "#323c39", "Editorial": "#3f3f74", "Capital": "#306082", "news": "#5b6ee1", "General": "#639bff", "National": "#5fcde4", "World": "#cbdbfc", "SILVER LININGS": "#dc3545"}
+          $.each($(".grabtomodal").toArray(),function (i,l) {
+                        $(l).css('background',catmap[$(l).attr("sitecat")]);
+                    });
+        });
+
+        $(document).on('click','li.grabtomodal',function () {
+            $("#title").text($(this).attr("news"));
+            bod = "<p>"+$(this).attr("summary")+"</p>"
+            bod = bod + "<br><span class='badge badge-warning badge-pill'>"+$(this).attr('cat')+"</span>"
+            bod = bod + "<br><span class='badge badge-info badge-pill'>"+$(this).attr('sitecat')+"</span>"
+            $("#summary").html(bod);
+            $("#modalsummary").modal('show');
+        });
 
         var csrftoken = Cookies.get('csrftoken');
         function csrfSafeMethod(method) {
@@ -156,9 +426,17 @@
                 success:function (result) {
                     $.each(result,function (i,l) {
                         {#var items = "<li class='list-group-item "+{0}+"' style='background: "+{1}+"' newsid='"+{2}+"'>"+{3}+"</li>";#}
-                        var items = "<li class='list-group-item newsreadlist' style='background: "+l.background+"' id='"+l.id+"news'>"+l.news;
-                        items = items + "<br><span class='badge badge-warning badge-pill'>CATEGORY</span>"
-                        items = items + "<button id="+l.id+" class='btn btn-sm btn-outline-primary float-right addnews'>"+"+"+"</button></li>"
+
+                        var items = "<li ";
+                        var items = items + "cat = '" +l.cat +"' ";
+                        var items = items + "sitecat = '" + l.sitecat + "' ";
+                        var items = items + "summary = '" + l.summ + "' ";
+                        var items = items + "news = '" + l.news + "' ";
+
+                        var items = items + "class='grabtomodal list-group-item newsreadlist' style='background: black;color:white;' id='"+l.idxs+"news'>"+l.news;
+                        items = items + "<br><span class='badge badge-warning badge-pill'>"+l.cat+"</span>"
+                        items = items + "<span class='badge badge-info badge-pill'>"+l.sitecat+"</span>";
+                        items = items + "<button id="+l.idxs+" style='margin:10px;background-color: #6c757d;color:white;border-color: #212529;' class='btn btn-sm btn-outline-primary float-right addnews'>"+"+"+"</button></li>"
                         $("#allnewslist").prepend(items);
                     })
                 },
@@ -185,15 +463,29 @@
                 contentType:false,
                 success:function (result) {
                     $.each(result['custom'],function (i,l) {
-                        var items = "<li class='list-group-item' style='background: "+l.background+"' id='"+l.id+"news'>"+l.news;
-                        items = items + "<br><span class='badge badge-warning badge-pill'>CATEGORY</span>";
+                        var items = "<li ";
+                        var items = items + "cat = '" +l.cat +"' ";
+                        var items = items + "sitecat = '" + l.sitecat + "' ";
+                        var items = items + "summary = '" + l.summ + "' ";
+                        var items = items + "news = '" + l.news + "' ";
+
+                        var items = items + "class='recomcustomtitle colorit grabtomodal list-group-item' style='background: black;color:white;' id='"+l.idxs+"news'>"+l.news;
+                        items = items + "<br><span class='badge badge-warning badge-pill'>"+l.cat+"</span>";
+                        items = items + "<span class='badge badge-info badge-pill'>"+l.sitecat+"</span>";
                         items = items + "<span class='badge badge-danger badge-pill float-right'>"+l.serial+"</span></li>";
                         $("#recommendationslist").append(items);
                     });
 
                     $.each(result['google'],function (i,l) {
-                        var items = "<li class='list-group-item' style='background: "+l.background+"' id='"+l.id+"news'>"+l.news;
-                        items = items + "<br><span class='badge badge-warning badge-pill'>CATEGORY</span>";
+                        var items = "<li ";
+                        var items = items + "cat = '" +l.cat +"' ";
+                        var items = items + "sitecat = '" + l.sitecat + "' ";
+                        var items = items + "summary = '" + l.summ + "' ";
+                        var items = items + "news = '" + l.news + "' ";
+
+                        var items = items + "class='recomgoogletitle colorit grabtomodal list-group-item' style='background: black;color:white;' id='"+l.idxs+"news'>"+l.news;
+                        items = items + "<br><span class='badge badge-warning badge-pill'>"+l.cat+"</span>";
+                        items = items + "<span class='badge badge-info badge-pill'>"+l.sitecat+"</span>";
                         items = items + "<span class='badge badge-danger badge-pill float-right'>"+l.serial+"</span></li>";
                         $("#recommendationslist_").append(items);
                     });
@@ -204,6 +496,58 @@
             });
             return false;
         });
+
+
+         $("#getrecom_summ").on('click',function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $("#recommendationslist_summ").empty();
+            $("#recommendationslist__summ").empty();
+            var myData = new FormData($("#recom-form_summ")[0]);
+            $.ajax({
+                type:"POST",
+                url:'/s/',
+                data:myData,
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    $.each(result['custom'],function (i,l) {
+                        var items = "<li ";
+                        var items = items + "cat = '" +l.cat +"' ";
+                        var items = items + "sitecat = '" + l.sitecat + "' ";
+                        var items = items + "summary = '" + l.summ + "' ";
+                        var items = items + "news = '" + l.news + "' ";
+
+                        var items = items + "class='recomcustomtitle_summ colorit grabtomodal list-group-item' style='background: black;color:white;' id='"+l.idxs+"news_summ'>"+l.news;
+                        items = items + "<br><span class='badge badge-warning badge-pill'>"+l.cat+"</span>";
+                        items = items + "<span class='badge badge-info badge-pill'>"+l.sitecat+"</span>";
+                        items = items + "<span class='badge badge-danger badge-pill float-right'>"+l.serial+"</span></li>";
+                        $("#recommendationslist_summ").append(items);
+                    });
+
+                    $.each(result['google'],function (i,l) {
+                        var items = "<li ";
+                        var items = items + "cat = '" +l.cat +"' ";
+                        var items = items + "sitecat = '" + l.sitecat + "' ";
+                        var items = items + "summary = '" + l.summ + "' ";
+                        var items = items + "news = '" + l.news + "' ";
+
+                        var items = items + "class='recomgoogletitle_summ colorit grabtomodal list-group-item' style='background: black;color:white;' id='"+l.idxs+"news_summ'>"+l.news;
+                        items = items + "<br><span class='badge badge-warning badge-pill'>"+l.cat+"</span>";
+                        items = items + "<span class='badge badge-info badge-pill'>"+l.sitecat+"</span>";
+                        items = items + "<span class='badge badge-danger badge-pill float-right'>"+l.serial+"</span></li>";
+                        $("#recommendationslist__summ").append(items);
+                    });
+                },
+                error:function (result) {
+                    alert("ERRROR");
+                }
+            });
+            return false;
+        });
+
+
+
         $("#get_n_candidate").on('click',function (event) {
             event.preventDefault();
             event.stopPropagation();
@@ -218,15 +562,19 @@
                 contentType:false,
                 success:function (result) {
                     $.each(result,function (i,l) {
-                        var items = "<li class='list-group-item newsrecomlist' style='background: "+l.background+"'>"+l.news;
-                        items = items + "<br><span class='badge badge-warning badge-pill'>CATEGORY</span></li>";
+                        var items = "<li ";
+                        var items = items + "cat = '" +l.cat +"' ";
+                        var items = items + "sitecat = '" + l.sitecat + "' ";
+                        var items = items + "summary = '" + l.summ + "' ";
+                        var items = items + "news = '" + l.news + "' ";
+
+                        var items = items + "class='colorit grabtomodal list-group-item newsrecomlist' style='background: black;color:white;'>"+l.news;
+                        items = items + "<br><span class='badge badge-warning badge-pill'>"+l.cat+"</span>";
+                        items = items + "<span class='badge badge-info badge-pill'>"+l.sitecat+"</span></li>";
                         $("#recomnewslist").prepend(items);
-                        if($("#allnewslist").find(l.id+"news")){
-                            $("#"+l.id+"news").remove();
+                        if($("#allnewslist").find(l.idxs+"news")){
+                            $("#"+l.idxs+"news").remove();
                         }
-                    });
-                    $.each($(".newsreadlist").toArray(),function (i,l) {
-                        $(l).css('background',background[i%2])
                     });
                 },
                 error:function (result) {
@@ -260,16 +608,6 @@
                     $(listid).addClass("newsreadlist");
                     $(listid).appendTo("#allnewslist");
                     $(listid).attr('id',newsid+"news");
-
-
-
-                    $.each($(".userreadlist").toArray(),function (i,l) {
-                        $(l).css('background',background[i%2])
-                    });
-
-                    $.each($(".newsreadlist").toArray(),function (i,l) {
-                        $(l).css('background',background[i%2])
-                    });
                 },
                 error:function (result) {
                     alert("ERROR");
@@ -303,14 +641,6 @@
                     $(listid).addClass("userreadlist")
                     $(listid).prependTo("#usereradnews");
                     $(listid).attr('id',newsid+"user");
-
-                    $.each($(".userreadlist").toArray(),function (i,l) {
-                        $(l).css('background',background[i%2])
-                    });
-
-                    $.each($(".newsreadlist").toArray(),function (i,l) {
-                        $(l).css('background',background[i%2])
-                    });
                 },
                 error:function (result) {
                     alert("ERROR");

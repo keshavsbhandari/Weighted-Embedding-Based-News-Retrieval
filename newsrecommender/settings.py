@@ -25,7 +25,7 @@ SECRET_KEY = 'jbd1c^q=2ot++*za%-0(6*!*a$d3-o$d8z#f1)-o#16!d$=o7c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0','192.168.1.4','147.26.87.176','127.0.0.1']
 
 
 # Application definition

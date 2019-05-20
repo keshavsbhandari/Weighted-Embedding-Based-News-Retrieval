@@ -15,25 +15,39 @@ class Recommender(object):
     def __init__(self,
                  model_path = 'data/embeddings/mdl',
                  user_path = 'data/user.json',
-                 news_path  ='data/news.json',
+                 title_path  ='data/news.json',#news path is for title only
                  recom_path ='data/recom.json',
                  ids_path   ='data/ids.json',
                  embed_dimension=100,
                  use_google = False,
+                 only_title = True,
+                 summary_path = None,#for all the summary
                  ):
+
+        self.summary_path = summary_path
+        self.title_path = title_path
         self.user_path = user_path
-        self.news_path = news_path
+        self.model_path = model_path
+
+        if only_title:
+            self.news_path = self.title_path
+        else:
+            self.news_path = self.summary_path
+
         self.recom_path = recom_path
         self.ids_path = ids_path
         self.dimension = embed_dimension
+
         if use_google:
             self.model = models.KeyedVectors.load_word2vec_format(model_path,binary=True)
         else:
-            self.model = models.Word2Vec.load(model_path)
-        self.user = self.__readfile(user_path)
-        self.news = self.__readfile(news_path)
-        self.recom = self.__readfile(recom_path)
-        self.ids = self.__readfile(ids_path)
+            self.model = models.Word2Vec.load(self.model_path)
+
+        self.user = self.__readfile(self.user_path)
+
+        self.news = self.__readfile(self.news_path)
+        self.recom = self.__readfile(self.recom_path)
+        self.ids = self.__readfile(self.ids_path)
 
         self.__getnews = lambda user,news:map(lambda x:news.get(x),user)
         self.__clean = lambda x:x.translate(str.maketrans("","", string.punctuation)).strip()
@@ -41,6 +55,14 @@ class Recommender(object):
 
         self.getrecomvec(self.recom,self.news)
         self.getuservec(self.user,self.news)
+
+    def use_title(self):
+        self.news_path = self.title_path
+        self.news = self.__readfile(self.news_path)
+
+    def use_summary(self):
+        self.news_path = self.summary_path
+        self.news = self.__readfile(self.news_path)
 
     def updaterecom(self):
         self.recom = self.__readfile(self.recom_path)
@@ -53,6 +75,7 @@ class Recommender(object):
 
     def getrecomvec(self,recom,news):
         self.recomvec = self.__weightedAvgEmbedding(self.__computetfidfmap(self.__getnews(recom,news)))
+
 
     def getuservec(self,user,news):
         self.uservec = self.__avgofAll(self.__weightedAvgEmbedding(self.__computetfidfmap(self.__getnews(user,news))))

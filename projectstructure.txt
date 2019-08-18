@@ -1,0 +1,78 @@
+.
+├── README.md
+├── api.py
+├── data
+│   ├── GoogleNews-vectors-negative300.bin
+│   ├── allnews
+│   │   ├── cat_all.json
+│   │   ├── colorcat.json
+│   │   ├── colorsitecat.json
+│   │   ├── custom_recom_all.json
+│   │   ├── custom_user_all.json
+│   │   ├── ids_all.json
+│   │   ├── recom_all.json
+│   │   ├── sitecat_all.json
+│   │   ├── summary_all.json
+│   │   ├── title_all.json
+│   │   └── user_all.json
+│   ├── embeddings
+│   │   ├── mdl
+│   │   ├── mdl.syn1neg.npy
+│   │   └── mdl.wv.syn0.npy
+│   ├── ids.json
+│   ├── news.json
+│   ├── recom.json
+│   └── user.json
+├── db.sqlite3
+├── gensim_noprefix.yml
+├── gensim_withprefix.yml
+├── manage.py
+├── newsrecommender
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-35.pyc
+│   │   ├── __init__.cpython-36.pyc
+│   │   ├── settings.cpython-35.pyc
+│   │   ├── settings.cpython-36.pyc
+│   │   ├── urls.cpython-35.pyc
+│   │   ├── urls.cpython-36.pyc
+│   │   └── wsgi.cpython-36.pyc
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── projectstructure.txt
+├── recommender
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-35.pyc
+│   │   ├── __init__.cpython-36.pyc
+│   │   ├── admin.cpython-35.pyc
+│   │   ├── admin.cpython-36.pyc
+│   │   ├── apps.cpython-35.pyc
+│   │   ├── apps.cpython-36.pyc
+│   │   ├── models.cpython-35.pyc
+│   │   ├── models.cpython-36.pyc
+│   │   ├── service.cpython-36.pyc
+│   │   ├── urls.cpython-36.pyc
+│   │   └── views.cpython-36.pyc
+│   ├── admin.py
+│   ├── apps.py
+│   ├── migrations
+│   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       └── __init__.cpython-36.pyc
+│   ├── models.py
+│   ├── service.py
+│   ├── static
+│   │   └── recommender
+│   │       └── css
+│   │           └── style.css
+│   ├── templates
+│   │   └── recommender
+│   │       └── index.html
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+└── requirements.txt
+
+14 directories, 61 files

@@ -22,3 +22,6 @@ Weighted Embeddings for Document Retrieval
 4.  Run api.py
 
 5.  Run Django Server
+
+# Acknowledgement
+https://ekantipur.com
